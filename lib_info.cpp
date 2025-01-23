@@ -28,11 +28,11 @@ int album::getTotalSeconds(){
     int total_seconds = 0;
     int minutes = 0;
     int seconds = 0;
-    for(int i=0; i<tracks.length(); i++)
+    for(int i=0; i<length; i++)
     {
-        stringstream ss(tracks[i].length);
+        istringstream ss(tracks[i].length);
         getline(ss, minutes, ':');
-        getline(ss, seconds);
+        getline(ss, seconds, ' ');
         total_seconds += (minutes*60)+seconds;
     }
     return total_seconds;
