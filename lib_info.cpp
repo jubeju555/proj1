@@ -90,11 +90,7 @@ map<int, artist> storefile(string filename)
             }
             album Exodus;
             Exodus.title = album_name;
-            Exodus.length
-
-
-
-
+            Exodus.length = 0;
         }
     }
     return;
@@ -102,8 +98,9 @@ map<int, artist> storefile(string filename)
 
 void organizefile(string filename)
 {
-    
     // organize the file in a specific format
+
+
     return;
 }
 // print file accordngi to the format
