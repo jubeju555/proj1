@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <map>
+#include <iterator>
 
 using namespace std;
 struct song
@@ -21,25 +22,27 @@ struct album
 
     int getTotalSeconds();
 };
-// Calculate and return the total number of 
+// Calculate and return the total number of
 // seconds of all of the tracks in an album
-int album::getTotalSeconds(){
+int album::getTotalSeconds()
+{
     int total_seconds = 0;
     string minutes = 0;
     string seconds = 0;
-    for(int i=0; i<length; i++)
+    for (int i = 0; i < length; i++)
     {
         istringstream ss(tracks[i].length);
         getline(ss, minutes, ':');
         getline(ss, seconds, ' ');
-        total_seconds += (stoi(minutes)*60)+stoi(seconds);
+        total_seconds += (stoi(minutes) * 60) + stoi(seconds);
     }
     return total_seconds;
 }
 struct artist
 {
     string name;
-    vector<album> albums;
+    map<string, album> albums;
+    void printfile(string filename);
 };
 
 string removeSpaces(string s)
@@ -52,16 +55,17 @@ string removeSpaces(string s)
 
     string new_string = "";
     stringstream ss(s);
-    while (ss.good()){ //used Geeks4Geeks to referesh on stringstreams
+    while (ss.good())
+    { // used Geeks4Geeks to referesh on stringstreams
         string word = "";
         getline(ss, word, '_');
-        //if formatting gets weird, add to a vector and parse that way
+        // if formatting gets weird, add to a vector and parse that way
         new_string = new_string + word + " ";
     }
     return new_string;
 }
 
-map<int, artist> storefile(string filename)
+map<string, artist> storefile(string filename)
 {
     // read the file in and store it, (posibly in vector)
     ifstream fileIn(filename);
@@ -75,25 +79,36 @@ map<int, artist> storefile(string filename)
     string track = "";
     int count = 0;
     map<string, artist> judah;
-    if(fileIn.is_open()){
-        while(getline(fileIn, line)){
+    if (fileIn.is_open())
+    {
+        while (getline(fileIn, line))
+        {
             stringstream ss(line);
-            ss>>title>>time>>artist_name>>album_name>>genre>>track;
-            //make artist and fill variables
-            artist BobMarley;
-            BobMarley.name = artist_name;
-            //store artist in map
-            judah.insert({BobMarley.name, BobMarley});
-            //make album and fill variables
-            for( int i = 0; i < judah[BobMarley.name].albums.size(); i++){
+            ss >> title >> time >> artist_name >> album_name >> genre >> track;
+            
+            // store artist in map if not found
+            if (judah.find(artist_name) == judah.end())
+            {
+                // make artist, fill variables, and insert
+                artist BobMarley;
+                BobMarley.name = artist_name;
+                judah.insert({artist_name, BobMarley});
+            }
+            artist BobMarley = judah.at(judah.find(artist_name));
+                
+           // store album in artist if not found
+          if (judah.find(album_name) == .albums.end()){ 
                 album Exodus;
                 Exodus.title = album_name;
                 Exodus.length = 0;
-                judah[BobMarley.name].albums.push_back(Exodus);
+                judah[BobMarley.name].albums.insert({album_name, Exodus});
+            }
                 song OneLove;
+                // fill song variables
                 OneLove.tracknum = count;
                 OneLove.title = title;
                 OneLove.length = time;
+                // store song in album
                 judah[BobMarley.name].albums[count].tracks.push_back(OneLove);
                 count++;
             }
@@ -102,20 +117,31 @@ map<int, artist> storefile(string filename)
     return judah;
 }
 
-
 // print file accordngi to the format
-void printfile(string filename)
+void artist::printfile(string filename)
 {
     // read the file in and store it, (posibly in vector)
     ifstream fileIn(filename);
     string line = "";
     string title = "";
     string time = "";
-    if(fileIn.is_open()){
-        while(getline(fileIn, line)){
+    if (fileIn.is_open())
+    {
+        while (getline(fileIn, line))
+        {
             stringstream ss(line);
-            ss>>title>>time;
-            cout<<title<<" "<<time<<endl;
+            ss >> title >> time;
+            cout << name << ", " << albums << endl;
+            for (int i = 0; i < albums.size(); i++)
+            {
+                cout << albums[i].title << ": " << albums[i].getTotalSeconds() << endl;
+                cout << tracks << endl;
+                
+            }
+            
+            // cout << "Track " << track << ": ";
+            // cout <<
+            cout << title << " " << time << endl;
         }
     }
 

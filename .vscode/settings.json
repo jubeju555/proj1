@@ -3,6 +3,12 @@
         "*.tcc": "cpp",
         "fstream": "cpp",
         "iostream": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "unordered_map": "cpp",
+        "string_view": "cpp",
+        "typeinfo": "cpp"
     }
 }
