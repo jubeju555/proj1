@@ -85,24 +85,24 @@ map<int, artist> storefile(string filename)
             //store artist in map
             judah.insert({BobMarley.name, BobMarley});
             //make album and fill variables
-            for(){
-
+            for( int i = 0; i < judah[BobMarley.name].albums.size(); i++){
+                album Exodus;
+                Exodus.title = album_name;
+                Exodus.length = 0;
+                judah[BobMarley.name].albums.push_back(Exodus);
+                song OneLove;
+                OneLove.tracknum = count;
+                OneLove.title = title;
+                OneLove.length = time;
+                judah[BobMarley.name].albums[count].tracks.push_back(OneLove);
+                count++;
             }
-            album Exodus;
-            Exodus.title = album_name;
-            Exodus.length = 0;
         }
     }
-    return;
+    return judah;
 }
 
-void organizefile(string filename)
-{
-    // organize the file in a specific format
 
-
-    return;
-}
 // print file accordngi to the format
 void printfile(string filename)
 {
