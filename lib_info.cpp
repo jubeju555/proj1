@@ -106,9 +106,23 @@ map<int, artist> storefile(string filename)
 // print file accordngi to the format
 void printfile(string filename)
 {
+    // read the file in and store it, (posibly in vector)
+    ifstream fileIn(filename);
+    string line = "";
+    string title = "";
+    string time = "";
+    if(fileIn.is_open()){
+        while(getline(fileIn, line)){
+            stringstream ss(line);
+            ss>>title>>time;
+            cout<<title<<" "<<time<<endl;
+        }
+    }
+
     return;
 }
 int main()
 {
+
     return 0;
 }
