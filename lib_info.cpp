@@ -48,12 +48,6 @@ struct artist
 
 string removeSpaces(string s)
 {
-    // for(int i=0; i< s.length(); i++){
-    //     if(s[i] == '_'){
-    //         s[i] = ' ';
-    //     }
-    // }
-
     string new_string = "";
     stringstream ss(s);
     while (ss.good())
@@ -134,15 +128,18 @@ void artist::printfile(string filename)
             cout << name << ", " << albums << endl;
             for (int i = 0; i < albums.size(); i++)
             {
-                cout << albums[i].title << " " << albums[i].getTotalSeconds() << endl;
-                cout << albums[i].tracks.size() << endl;
+                cout << albums[i].title << albums[i].tracks.size() <<albums[i].getTotalSeconds() << endl;
+                cout << artist_name[i].title << " " << albums[i].tracks.size() << " " << albums[i].getTotalSeconds() << endl;
+                printf("%s %d %d\n", albums[i].title, albums[i].tracks.size(), albums[i].getTotalSeconds());
+                for (int j = 0; j < albums[i].tracks.size(); j++)
+                {
+                    cout << albums[i].tracks[j].title << " " << albums[i].tracks[j].length << endl;
+                }
+                
                 cout << albums[i].tracks[0].title << " " << albums[i].tracks[0].length << endl;
                 cout << albums[i].tracks[1].title << " " << albums[i].tracks[1].length << endl;
                 
             }
-            
-            // cout << "Track " << track << ": ";
-            // cout <<
             cout << title << " " << time << endl;
         }
     }
