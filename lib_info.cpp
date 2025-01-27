@@ -34,6 +34,7 @@ int album::getTotalSeconds()
         istringstream ss(tracks[i].length);
         getline(ss, minutes, ':');
         getline(ss, seconds, ' ');
+        // error is due to not being c++11, should be fine
         total_seconds += (stoi(minutes) * 60) + stoi(seconds);
     }
     return total_seconds;
@@ -113,9 +114,9 @@ map<string, artist> storefile(string filename)
                 count++;
             }
         }
-    }
     return judah;
-}
+    }
+
 
 // print file accordngi to the format
 void artist::printfile(string filename)
@@ -134,8 +135,10 @@ void artist::printfile(string filename)
             cout << name << ", " << albums << endl;
             for (int i = 0; i < albums.size(); i++)
             {
-                cout << albums[i].title << ": " << albums[i].getTotalSeconds() << endl;
-                cout << tracks << endl;
+                cout << albums[i].title << " " << albums[i].getTotalSeconds() << endl;
+                cout << albums[i].tracks.size() << endl;
+                cout << albums[i].tracks[0].title << " " << albums[i].tracks[0].length << endl;
+                cout << albums[i].tracks[1].title << " " << albums[i].tracks[1].length << endl;
                 
             }
             
