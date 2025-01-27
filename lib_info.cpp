@@ -150,6 +150,7 @@ void artist::printfile(string filename)
 
     return;
 }
+
 int main()
 {
 
