@@ -88,15 +88,15 @@ map<string, artist> storefile(string filename)
             ss >> title >> time >> artist_name >> album_name >> genre >> track;
             
             // store artist in map if not found
-            if (judah.find(artist_name) == judah.end())
+            map<string, artist>::iterator artist_it = judah.find(artist_name);
+            if (artist_it == judah.end())
             {
                 // make artist, fill variables, and insert
                 artist BobMarley;
                 BobMarley.name = artist_name;
-                judah.insert({artist_name, BobMarley});
-            }
-            artist BobMarley = judah.at(judah.find(artist_name));
+                pair<map<string, artist>::iterator, bool> = judah.insert({artist_name, BobMarley});
                 
+            }
            // store album in artist if not found
           if (judah.find(album_name) == .albums.end()){ 
                 album Exodus;
