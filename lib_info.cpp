@@ -126,6 +126,7 @@ void artist::printfile(string filename)
     string line = "";
     string title = "";
     string time = "";
+    
     if (fileIn.is_open())
     {
         while (getline(fileIn, line))
