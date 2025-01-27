@@ -135,9 +135,9 @@ void artist::printfile(string filename)
                 {
                     cout << albums[i].tracks[j].title << " " << albums[i].tracks[j].length << endl;
                 }
-                
-                cout << albums[i].tracks[0].title << " " << albums[i].tracks[0].length << endl;
-                cout << albums[i].tracks[1].title << " " << albums[i].tracks[1].length << endl;
+
+                // cout << albums[i].tracks[0].title << " " << albums[i].tracks[0].length << endl;
+                // cout << albums[i].tracks[1].title << " " << albums[i].tracks[1].length << endl;
                 
             }
             cout << title << " " << time << endl;
