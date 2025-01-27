@@ -117,7 +117,6 @@ map<string, artist> storefile(string filename)
     return judah;
     }
 
-
 // print file accordngi to the format
 void artist::printfile(string filename)
 {
