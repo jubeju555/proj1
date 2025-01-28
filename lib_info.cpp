@@ -19,6 +19,7 @@ struct album
     string title;
     int time_length = 0;
     int num_songs = 0;
+    int num_tracks = 0;
     map<string, song> tracks;
 
     int getTotalSeconds();
@@ -47,6 +48,7 @@ struct artist
 {
     string name;
     int num_songs = 0;
+    string total_time = 0;
     map<string, album> albums;
     void printfile(string filename);
 };
@@ -168,24 +170,20 @@ void artist::printfile(string filename)
     return;
 }
 */
-void artist::printfile(string filename){
+void printfile(string filename){
     // read the file in and store it, (posibly in vector)
-    
-    string line = "";
-    string title = "";
-    string time = "";
-    artist BobMarley;
     map<string, artist> judah = storefile(filename);
     for(map<string,artist>::iterator it = judah.begin(); it!=judah.end(); it++){
-        cout<<it->second.name<<": ";
+        cout<<it->second.name<<": "<<it->second.num_songs<<", "<<it->second.total_time<<endl;
         for(map<string,album>::iterator jt = it->second.albums.begin(); jt!=it->second.albums.end(); jt++){
-            cout<<""
+            cout<<"        "<<jt->second.title<<": "<<jt->second.num_tracks<<", "<<jt->second.time_length<<endl;
             for(map<string,song>::iterator nt = jt->second.tracks.begin(); nt!=jt->second.tracks.end(); nt++){
-                printf();
+                cout<<nt->second.tracknum<<". "<<nt->second.title<<": "<<nt->second.length;
             }
         }
     }
 }
-int main(){
-
+int main(int argc, char* argv[]){
+    if(argc<1) cerr<<"No file input";
+    printfile(argv[1]);
 }
