@@ -94,6 +94,7 @@ map<string, artist> storefile(string filename)
     map<string, artist> judah;
     while (getline(fileIn, line))
     {
+        removeSpaces(line);
         stringstream ss(line);
         ss >> song_title >> time >> artist_name >> album_name >> genre >> track;
             
@@ -103,6 +104,7 @@ map<string, artist> storefile(string filename)
         {
             // make artist, fill variables, and insert
             artist BobMarley;
+            cout<<endl<<"TESTER KEATON"<<endl<<endl;
             BobMarley.name = artist_name;
             artist_it = judah.insert({artist_name, BobMarley}).first;
         }
@@ -184,6 +186,5 @@ void printfile(string filename){
     }
 }
 int main(int argc, char* argv[]){
-    if(argc<1) cerr<<"No file input";
     printfile(argv[1]);
 }
