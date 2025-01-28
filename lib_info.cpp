@@ -17,31 +17,36 @@ struct song
 struct album
 {
     string title;
-    double length;
-    vector<song> tracks;
+    int time_length = 0;
+    int num_songs = 0;
+    map<string, song> tracks;
 
     int getTotalSeconds();
 };
 // Calculate and return the total number of
 // seconds of all of the tracks in an album
-int album::getTotalSeconds()
-{
-    int total_seconds = 0;
-    string minutes = 0;
-    string seconds = 0;
-    for (int i = 0; i < length; i++)
-    {
-        istringstream ss(tracks[i].length);
-        getline(ss, minutes, ':');
-        getline(ss, seconds, ' ');
-        // error is due to not being c++11, should be fine
-        total_seconds += (stoi(minutes) * 60) + stoi(seconds);
-    }
-    return total_seconds;
-}
+
+// int album::getTotalSeconds()
+// {
+//     int total_seconds = 0;
+//     string minutes = 0;
+//     string seconds = 0;
+//     map<string, song>::iterator song_it;
+//
+//     for (song_it = tracks.begin(); song_it!=tracks.end(); song_it++)
+//     {
+//         istringstream ss(song_it->first);
+//         getline(ss, minutes, ':');
+//         getline(ss, seconds, ' ');
+//         // error is due to not being c++11, should be fine
+//         total_seconds += (stoi(minutes) * 60) + stoi(seconds);
+//     }
+//     return total_seconds;
+// }
 struct artist
 {
     string name;
+    int num_songs = 0;
     map<string, album> albums;
     void printfile(string filename);
 };
@@ -60,58 +65,74 @@ string removeSpaces(string s)
     return new_string;
 }
 
+int toSeconds(string sec){
+    stringstream ss(sec);
+    string time_string;
+    int seconds = 0;
+    getline(ss, time_string, ':');
+    seconds += stoi(time_string)*60;
+    getline(ss, time_string);
+    seconds += stoi(time_string);
+    return seconds;
+}
+
 map<string, artist> storefile(string filename)
 {
     // read the file in and store it, (posibly in vector)
     ifstream fileIn(filename);
     string line = "";
-    string title = "";
+    string song_title = "";
     string time = "";
     string artist_name = "";
     string name = "";
     string album_name = "";
     string genre = "";
-    string track = "";
+    int track = 0;
     int count = 0;
     map<string, artist> judah;
-    if (fileIn.is_open())
+    while (getline(fileIn, line))
     {
-        while (getline(fileIn, line))
-        {
-            stringstream ss(line);
-            ss >> title >> time >> artist_name >> album_name >> genre >> track;
+        stringstream ss(line);
+        ss >> song_title >> time >> artist_name >> album_name >> genre >> track;
             
-            // store artist in map if not found
-            map<string, artist>::iterator artist_it = judah.find(artist_name);
-            if (artist_it == judah.end())
-            {
-                // make artist, fill variables, and insert
-                artist BobMarley;
-                BobMarley.name = artist_name;
-                pair<map<string, artist>::iterator, bool> = judah.insert({artist_name, BobMarley});
-                
-            }
-           // store album in artist if not found
-          if (judah.find(album_name) == .albums.end()){ 
-                album Exodus;
-                Exodus.title = album_name;
-                Exodus.length = 0;
-                judah[BobMarley.name].albums.insert({album_name, Exodus});
-            }
-                song OneLove;
-                // fill song variables
-                OneLove.tracknum = count;
-                OneLove.title = title;
-                OneLove.length = time;
-                // store song in album
-                judah[BobMarley.name].albums[count].tracks.push_back(OneLove);
-                count++;
-            }
+        // store artist in map if not found
+        map<string, artist>::iterator artist_it = judah.find(artist_name);
+        if (artist_it == judah.end())
+        {
+            // make artist, fill variables, and insert
+            artist BobMarley;
+            BobMarley.name = artist_name;
+            artist_it = judah.insert({artist_name, BobMarley}).first;
         }
-    return judah;
+
+        map<string, album>::iterator album_it = artist_it->second.albums.find(album_name);
+        if (album_it == artist_it->second.albums.end()){ 
+            //make album, fill variables, insert
+            album Exodus;
+            Exodus.title = album_name;
+            Exodus.time_length += toSeconds(time);
+            album_it=artist_it->second.albums.insert({album_name, Exodus}).first;
+        }
+
+        map<string, song>::iterator song_it = album_it->second.tracks.find(song_title);
+        if(song_it == album_it->second.tracks.end()){
+            artist_it->second.num_songs++;
+            song OneLove;
+            OneLove.tracknum = track;
+            OneLove.title = song_title;
+            OneLove.length = time;
+            album_it->second.tracks.insert({song_title, OneLove});
+            // store song in album
+
+            count++;
+        }
     }
+    return judah;
+}
+
 
 // print file accordngi to the format
+/* 
 void artist::printfile(string filename)
 {
     // read the file in and store it, (posibly in vector)
@@ -146,9 +167,25 @@ void artist::printfile(string filename)
 
     return;
 }
+*/
+void artist::printfile(string filename){
+    // read the file in and store it, (posibly in vector)
+    
+    string line = "";
+    string title = "";
+    string time = "";
+    artist BobMarley;
+    map<string, artist> judah = storefile(filename);
+    for(map<string,artist>::iterator it = judah.begin(); it!=judah.end(); it++){
+        cout<<it->second.name<<": ";
+        for(map<string,album>::iterator jt = it->second.albums.begin(); jt!=it->second.albums.end(); jt++){
+            cout<<""
+            for(map<string,song>::iterator nt = jt->second.tracks.begin(); nt!=jt->second.tracks.end(); nt++){
+                printf();
+            }
+        }
+    }
+}
+int main(){
 
-int main()
-{
-
-    return 0;
 }
