@@ -1,0 +1,8 @@
+Write up for project 1
+partners: judah benjamin, keaton wyrick
+Github handles: jubeju555, keatonium
+link to repo: https://github.com/jubeju555/CS302-proj1 
+Compiliation: just make or make test to run gradescripts
+summery: we each did pretty much everything, orginially i wrote the print function and the store function but i help him on his part
+and he fixed my print function as well. communication was mostly done through text, or in person. git hub we just made
+sure not to push at the same time, but moving forward we are going to use branches. 
